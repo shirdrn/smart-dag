@@ -4,7 +4,11 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
+import org.shirdrn.smart.dag.utils.NamedThreadFactory;
 import org.shirdrn.smart.dag.utils.ReflectionUtils;
 
 import com.google.common.base.Preconditions;
@@ -121,21 +125,24 @@ public abstract class AbstractDAG extends AbstractNameableComponent<DAG> impleme
 	
 	private class ParallelVertex extends AbstractVertexCollection {
 		
+		private final ExecutorService executorService;
 		private CountDownLatch latch;
 
 		public ParallelVertex(Collection<Vertex<?>> vertex) {
 			super(vertex);
 			Preconditions.checkArgument(vertex.size() > 0, "Parallel vertex collection MUST NOT be empty!");
 			latch = new CountDownLatch(vertex.size());
+			int nThreads = Math.min(vertex.size(), Runtime.getRuntime().availableProcessors());
+			ThreadFactory threadFactory = new NamedThreadFactory("FORK-vertex");
+			executorService = Executors.newFixedThreadPool(nThreads, threadFactory);
 		}
 		
 		@Override
 		public void fire() {
 			try {
 				for (final Vertex<?> v : vertex) {
-					VertexRunner worker = new VertexRunner(v);
-					worker.setName("FORK-vertex-" + v.getName());
-					worker.start();
+					VertexRunner runner = new VertexRunner(v);
+					executorService.execute(runner);
 				}
 			} finally {
 				try {
@@ -143,6 +150,7 @@ public abstract class AbstractDAG extends AbstractNameableComponent<DAG> impleme
 				} catch (InterruptedException e) {}
 				// reset the latch
 				latch = new CountDownLatch(vertex.size());
+				executorService.shutdown();
 			}		
 		}
 		

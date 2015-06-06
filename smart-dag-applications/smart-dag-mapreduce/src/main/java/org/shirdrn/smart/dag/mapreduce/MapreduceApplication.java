@@ -4,10 +4,9 @@ import java.io.IOException;
 
 import org.apache.hadoop.mapreduce.Job;
 import org.shirdrn.smart.dag.AbstractApplication;
-import org.shirdrn.smart.dag.Application;
 import org.shirdrn.smart.dag.ApplicationException;
 
-public final class MapreduceApplication extends AbstractApplication implements Application {
+public final class MapreduceApplication extends AbstractApplication {
 
 	protected final Job job;
 	

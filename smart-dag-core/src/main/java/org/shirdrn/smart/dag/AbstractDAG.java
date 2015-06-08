@@ -27,6 +27,7 @@ public abstract class AbstractDAG extends AbstractNameableComponent<DAG> impleme
 		dagMonitor = new DAGMonitorImpl();
 		dagMonitor.dagCreated(this);
 	}
+	
 	public AbstractDAG(DAGConfig config) {
 		super();
 		this.dagConfig = config;

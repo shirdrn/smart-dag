@@ -31,11 +31,15 @@ public class DAGMonitorImpl implements DAGMonitor {
 	
 	public DAGMonitorImpl(DAGConfig dagConfig) {
 		this.dagConfig = dagConfig;
-		String dumpClass = this.dagConfig.getString("smart.dag.monitor.dump.policy");
-		if(dumpClass == null) {
+		if(dagConfig == null) {
 			dumpPolicy = ReflectionUtils.newInstance(DefaultDumpPolicy.class);
 		} else {
-			dumpPolicy = ReflectionUtils.newInstance(dumpClass, DumpPolicy.class);
+			String dumpClass = this.dagConfig.getString("smart.dag.monitor.dump.policy");
+			if(dumpClass == null) {
+				dumpPolicy = ReflectionUtils.newInstance(DefaultDumpPolicy.class);
+			} else {
+				dumpPolicy = ReflectionUtils.newInstance(dumpClass, DumpPolicy.class);
+			}
 		}
 	}
 	

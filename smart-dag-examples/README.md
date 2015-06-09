@@ -1,6 +1,10 @@
 # smart-dag-examples
 
-[stone@hadoop6 shirdrn]$ yarn jar smart-dag-examples-0.0.1-SNAPSHOT.jar org.shirdrn.smart.dag.examples.MixedMRJobAndJavaApplicationDAG
+After packaging example codes, issue the following command:
+
+    $ yarn jar smart-dag-examples-0.0.1-SNAPSHOT.jar org.shirdrn.smart.dag.examples.MixedMRJobAndJavaApplicationDAG
+
+Result of program running information:
 
 15/06/06 22:58:58 INFO dag.DAGMonitorImpl: DAG created: dag=MixedMRJobAndJavaApplicationDAG
 15/06/06 22:58:59 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable

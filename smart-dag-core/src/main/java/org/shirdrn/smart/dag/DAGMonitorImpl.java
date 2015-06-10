@@ -135,11 +135,15 @@ public class DAGMonitorImpl implements DAGMonitor {
 			runningVertexKVs.put(vertex, new RunningVertex(vertex));
 		}
 		RunningVertex runningVertex = runningVertexKVs.get(vertex);
-		synchronized(runningVertex) {
-			// collect running vertexes belonging to the running DAG
-			runningDAGs.get(dag).getRunningVertexes().add(runningVertex);
+		if(runningVertex != null) {
+			synchronized(runningVertex) {
+				// collect running vertexes belonging to the running DAG
+				runningDAGs.get(dag).getRunningVertexes().add(runningVertex);
+			}
+			LOG.info("Vertex created: dag=" + dag.getName() + ", vertex=" + vertex.getName());		
+		} else {
+			throwVertexIllegalStateError(dag, vertex);
 		}
-		LOG.info("Vertex created: dag=" + dag.getName() + ", vertex=" + vertex.getName());		
 	}
 
 	@Override

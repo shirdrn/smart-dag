@@ -2,15 +2,15 @@
 
 Smart DAG computation framework written in Java.
 
-#Features
+# Features
 
 We can build a computation `DAG`, whose basic computation unit is abstracted as `Vertex`, a internal representation, and a `DAG` is comprised of `Vertex`s. A Vertex encapsulates some computation logic, called `Application`. Usually users can implement a application by extending the specified class `Application`. 
 
 Currently supports 2 types' `Application`: `JavaApplication`, `MapreduceApplication`.
 
-#Usage
+# Usage
 
-##Coding
+## Coding
 
 Here, we show a example which including 3 `Vertex`s. The Java code building procedure is depicted as follow:
 ```java
@@ -68,7 +68,7 @@ Here, we show a example which including 3 `Vertex`s. The Java code building proc
 For more detail about above example code, please check the source: https://github.com/shirdrn/smart-dag/blob/master/smart-dag-examples/src/main/java/org/shirdrn/smart/dag/examples/MixedMRJobAndJavaApplicationDAG.java.
 
 
-##Packaging DAG
+## Packaging DAG
 
 If you are using maven to create your DAG jar, you should use the following `maven-shade-plugin` configuration to create:
 
@@ -106,7 +106,7 @@ If you are using maven to create your DAG jar, you should use the following `mav
 	
 ```
 
-##DAG Execution
+## DAG Execution
 
 Assume your packaged JAR file is `smart-dag-examples-0.0.1-SNAPSHOT.jar`, main class is `org.shirdrn.smart.dag.examples.MixedMRJobAndJavaApplicationDAG`, you can use YARN's job submission command:
 	
